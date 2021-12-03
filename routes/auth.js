@@ -3,6 +3,7 @@ const User = require("../model/User");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const uuid = require("uuid");
+const path = require("path");
 
 router.get("/signin", (req,res) => {
     try{
@@ -67,7 +68,7 @@ router.post('/signup', async (req,res) => {
                 const filenames = passportImg.name.split(/\./);
                 const ext = filenames[filenames.length-1];
                 const imageName = filename + "." + ext;
-                uploadPath = __dirname + '/../public/uploads/' + imageName;
+                uploadPath = path.join(__dirname, "../public/uploads/" , imageName);
 
                 // Use the mv() method to place the file somewhere on your server
                 passportImg.mv(uploadPath, async(err) => {
