@@ -158,10 +158,19 @@
                                             <th class="inheader" width="200" style="color: #facd8a;">Amount Spent ($)</th>
                                             <th class="inheader" width="100" nowrap style="color: #facd8a;">Date</th>
                                         </tr>
-                                        <td colspan="4" style="border: 1px solid #ddd;padding: 8px;"><b>No deposits for this plan</b></td>                                            </tbody>
+                                        <% if(history.length === 0){%>
+                                            <td colspan="4" style="border: 1px solid #ddd;padding: 8px;"><b>No deposits for this plan</b></td> 
+                                        <%}else{%>
+                                            <% history.map(h => {%>
+                                                <tr>
+                                                    <td><%= h.amount%></td>
+                                                    <td><%= new Date(h.date).toLocaleDateString()%></td>
+                                                </tr>
+                                            <%})%>
+                                        <%}%>                                            </tbody>
                                     </table>
                                     <br>
-                                                                        <br>
+                                    <br>
                                 </td>
                             </tr>
                         </table>

@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const {ensureAuthenticated} = require("../config/auth");
 const User = require("../model/User");
+const History = require("../model/History");
 const bcrypt = require("bcryptjs");
 
 router.get("/dashboard", ensureAuthenticated, (req,res) => {
@@ -28,9 +29,10 @@ router.post("/make-deposit", ensureAuthenticated, (req,res) => {
     }
 });
 
-router.get("/deposits", ensureAuthenticated, (req,res) => {
+router.get("/deposits", ensureAuthenticated, async (req,res) => {
     try{
-        return res.render("deposits", {pageTitle: "Deposits", req});
+        const history = await History.find({userID: req.user.id});
+        return res.render("deposits", {pageTitle: "Deposits", history, req});
     }catch(err){
         return res.redirect("/");
     }
@@ -64,9 +66,10 @@ router.post("/withdraw", ensureAuthenticated, (req,res) => {
     }
 });
 
-router.get("/history", ensureAuthenticated, (req,res) => {
+router.get("/history", ensureAuthenticated, async (req,res) => {
     try{
-        return res.render("history", {pageTitle: "Hisotry", req});
+        const history = await History.find({userID: req.user.id});
+        return res.render("history", {pageTitle: "Hisotry", history, req});
     }catch(err){
         return res.redirect("/");
     }
