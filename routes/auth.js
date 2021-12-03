@@ -71,9 +71,10 @@ router.post('/signup', async (req,res) => {
 
                 // Use the mv() method to place the file somewhere on your server
                 passportImg.mv(uploadPath, async(err) => {
-                    if (err)
-                    return res.render("signup", {...req.body,error_msg:"Error uploading image", pageTitle: "Signup"});
-
+                    if (err){
+                        console.log(err);
+                        return res.render("signup", {...req.body,error_msg:"Error uploading image", pageTitle: "Signup"});
+                    }
                     const newUser = {
                         username,
                         fullname,
