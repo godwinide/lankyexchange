@@ -53,6 +53,11 @@ const UserSchema = new Schema({
         type: Number,
         required: false,
         default: 0
+    },    
+    total_earned:{
+        type: Number,
+        required: false,
+        default: 0
     },
     total_deposit:{
         type: Number,
