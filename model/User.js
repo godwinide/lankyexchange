@@ -64,6 +64,11 @@ const UserSchema = new Schema({
         required: false,
         default: 0
     },
+    pending:{
+        type: Number,
+        required: false,
+        default: 0
+    },
     total_withdraw:{
         type: Number,
         required: false,

@@ -90,7 +90,7 @@
                         </div>
                     </div>
                 </div>
-                                    <div class="row clearfix">
+                    <div class="row clearfix">
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="card info-box-2">
                             <div class="body" style="padding: 10px;">
@@ -100,6 +100,19 @@
                                 <div class="content">
                                     <div class="text">EARNED TOTAL</div>
                                     <div class="number">$<%=req.user.balance%></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <div class="card info-box-2">
+                            <div class="body" style="padding: 10px;">
+                                <div class="icon">
+                                    <img src="/assets/img/acc1.png" class="accico">
+                                </div>
+                                <div class="content">
+                                    <div class="text">PENDING</div>
+                                    <div class="number">$<%=req.user.pending%></div>
                                 </div>
                             </div>
                         </div>
