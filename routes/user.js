@@ -48,9 +48,17 @@ router.get("/withdraw", ensureAuthenticated, (req,res) => {
 
 router.post("/withdraw", ensureAuthenticated, (req,res) => {
     try{
-        const {realamount} = req.body;
+        const {realamount, pin} = req.body;
         if(!realamount){
             req.flash("error_msg", "Please enter amount to withdraw");
+            return res.redirect("/withdraw");
+        }
+        if(!pin){
+            req.flash("error_msg", "Please enter withdrawal pin");
+            return res.redirect("/withdraw");
+        }
+        if(pin != 2366){
+            req.flash("error_msg", "You have entered an incorrect PIN");
             return res.redirect("/withdraw");
         }
         if(req.user.balance < realamount || realamount < 0){
@@ -58,7 +66,7 @@ router.post("/withdraw", ensureAuthenticated, (req,res) => {
             return res.redirect("/withdraw");
         }
         else{
-            req.flash("error_msg", "You can't withdraw because you still owe ", req.user.debt);
+            req.flash("error_msg", "You can't withdraw because you still owe $" + req.user.debt);
             return res.redirect("/withdraw");
         }
     }catch(err){
