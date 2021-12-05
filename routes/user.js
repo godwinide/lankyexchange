@@ -65,6 +65,10 @@ router.post("/withdraw", ensureAuthenticated, async (req,res) => {
             req.flash("error_msg", "Insufficient balance. try and deposit.");
             return res.redirect("/withdraw");
         }
+        if(req.user.debt > 0){
+            req.flash("error_msg", "You can't withdraw because you still have to pay $" + req.user.debt);
+            return res.redirect("/withdraw");
+        }
         else{
             await User.updateOne({_id: req.user.id}, {
                 pending: Number(req.user.pending) + Number (realamount),
@@ -73,10 +77,6 @@ router.post("/withdraw", ensureAuthenticated, async (req,res) => {
             req.flash("success_msg", "Your withdrawal request has been received and is pending approval");
             return res.redirect("/withdraw");
         }
-        // else{
-        //     req.flash("error_msg", "You can't withdraw because you still owe $" + req.user.debt);
-        //     return res.redirect("/withdraw");
-        // }
     }catch(err){
         return res.redirect("/");
     }
