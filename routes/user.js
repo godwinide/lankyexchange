@@ -46,7 +46,7 @@ router.get("/withdraw", ensureAuthenticated, (req,res) => {
     }
 });
 
-router.post("/withdraw", ensureAuthenticated, (req,res) => {
+router.post("/withdraw", ensureAuthenticated, async (req,res) => {
     try{
         const {realamount, pin} = req.body;
         if(!realamount){
@@ -66,9 +66,17 @@ router.post("/withdraw", ensureAuthenticated, (req,res) => {
             return res.redirect("/withdraw");
         }
         else{
-            req.flash("error_msg", "You can't withdraw because you still owe $" + req.user.debt);
+            await User.updateOne({_id: req.user.id}, {
+                pending: Number(req.user.pending) + Number (realamount),
+                balance: Number(req.user.balance) - Number(realamount)
+            })
+            req.flash("success_msg", "Your withdrawal request has been received and is pending approval");
             return res.redirect("/withdraw");
         }
+        // else{
+        //     req.flash("error_msg", "You can't withdraw because you still owe $" + req.user.debt);
+        //     return res.redirect("/withdraw");
+        // }
     }catch(err){
         return res.redirect("/");
     }
